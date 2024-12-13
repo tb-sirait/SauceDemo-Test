@@ -1,0 +1,9 @@
+User Name: standard_user id: user-name
+Password: secret_sauce id: password
+
+button id: login-button
+
+Username (Wrong): test
+Password: secret_sauce
+
+<button class="btn btn_primary btn_small btn_inventory " data-test="add-to-cart-sauce-labs-backpack" id="add-to-cart-sauce-labs-backpack" name="add-to-cart-sauce-labs-backpack">Add to cart</button>
