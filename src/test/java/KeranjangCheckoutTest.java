@@ -1,5 +1,4 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -8,7 +7,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -75,7 +73,10 @@ public class KeranjangCheckoutTest {
 
         WebElement cartLink = driver.findElement(By.className("shopping_cart_link"));
         cartLink.click();
+    }
 
+    @Test(priority = 3)
+    public void positifIsiKeranjang() throws InterruptedException {
         try {
             WebElement itemKeranjang1 = driver.findElement(By.xpath("//div[@class='inventory_item_name' and text()='Sauce Labs Backpack']"));
             WebElement itemKeranjang2 = driver.findElement(By.xpath("//div[@class='inventory_item_name' and text()='Sauce Labs Fleece Jacket']"));
@@ -92,7 +93,25 @@ public class KeranjangCheckoutTest {
         System.out.println("=====================================");
     }
 
-    @Test(priority = 3)
+    @Test(priority = 4) // kasus negatif
+    public void negatifKeranjang() throws InterruptedException {
+        try {
+            WebElement itemKeranjang1 = driver.findElement(By.xpath("//div[@class='inventory_item_name' and text()='Sauce Labs Bolt T-Shirt']"));
+            WebElement itemKeranjang2 = driver.findElement(By.xpath("//div[@class='inventory_item_name' and text()='Sauce Labs Bike Light']"));
+
+            Assert.assertFalse(itemKeranjang1.isDisplayed(), "Sauce Labs Bolt T-Shirt ada di keranjang");
+            Assert.assertFalse(itemKeranjang2.isDisplayed(), "Sauce Labs Bike Light ada di keranjang");
+
+            System.out.println("Barang yang dipilih tidak sesuai dengan isi keranjang.");
+        } catch (Exception e) {
+            System.out.println("Barang sesuai. tidak bisa menjalankan case: " + e.getMessage());
+            Assert.assertTrue(true);
+        }
+        Thread.sleep(1000);
+        System.out.println("=====================================");
+    }
+
+    @Test(priority = 5)
     public void checkOutDongBarangnya() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
